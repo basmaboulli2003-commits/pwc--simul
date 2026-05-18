@@ -4,6 +4,8 @@ pipeline {
     tools {
         maven 'Maven-3.9'
         jdk 'JDK-17'
+        // Vérifie que 'CX_CLI' est le nom exact dans Administrer Jenkins > Tools
+        'com.checkmarx.jenkins.CxScanConfig' 'CX_CLI' 
     }
 
     environment {
@@ -12,22 +14,23 @@ pipeline {
     }
 
     stages {
-
-        stage('Update Kubeconfig') {
-            steps {
-                echo '=== Mise a jour kubeconfig KIND ==='
-                sh """
-                    kind export kubeconfig \
-                        --name ${CLUSTER_NAME} \
-                        --kubeconfig /var/jenkins_home/.kube/config
-                """
-            }
-        }
-
+        // ÉTAPE 1 : Récupérer le code source (Indispensable avant le scan)
         stage('Checkout') {
             steps {
                 echo '=== Récupération du code GitHub ==='
                 checkout scm
+            }
+        }
+
+        // ÉTAPE 2 : Scanner le code avec Checkmarx
+        stage('Security Scan (Checkmarx)') {
+            steps {
+                echo '=== Analyse de sécurité avec Checkmarx ==='
+                checkmarxASTScanner(
+                    projectName: 'springboot-kafka-microservices-intern',
+                    serverUrl: 'https://eu.ast.checkmarx.net/', 
+                    credentialsId: 'checkmarx-credstesr'
+                )
             }
         }
 
@@ -77,131 +80,14 @@ pipeline {
             }
         }
 
-        stage('Trivy Scan') {
+        stage('Update Kubeconfig') {
             steps {
-                script {
-                    def image = 'springboot-kafka-microservices/identity-service:latest'
-                    echo "=== Scan Trivy : ${image} ==="
-                    sh """
-                        docker run --rm \
-                            -v /var/run/docker.sock:/var/run/docker.sock \
-                            aquasec/trivy:latest image \
-                            --severity HIGH,CRITICAL \
-                            --exit-code 0 \
-                            --no-progress \
-                            --scanners vuln \
-                            --timeout 5m \
-                            ${image} || true
-                    """
-                }
-            }
-        }
-
-        stage('Load Images in KIND') {
-            steps {
-                script {
-                    def images = [
-                        'springboot-kafka-microservices/eureka-server:latest',
-                        'springboot-kafka-microservices/api-gateway:latest',
-                        'springboot-kafka-microservices/identity-service:latest',
-                        'springboot-kafka-microservices/order-service:latest',
-                        'springboot-kafka-microservices/payment-service:latest',
-                        'springboot-kafka-microservices/product-service:latest',
-                        'springboot-kafka-microservices/email-service:latest',
-                        'springboot-kafka-microservices/frontend:latest'
-                    ]
-                    images.each { img ->
-                        echo "=== Kind load: ${img} ==="
-                        sh "kind load docker-image ${img} --name ${CLUSTER_NAME}"
-                    }
-                }
-            }
-        }
-
-        stage('Setup NGINX Ingress') {
-            steps {
-                script {
-                    def nginxExists = sh(
-                        script: "kubectl get deployment ingress-nginx-controller -n ingress-nginx 2>/dev/null",
-                        returnStatus: true
-                    )
-                    if (nginxExists != 0) {
-                        echo '=== Installation NGINX Ingress ==='
-                        sh "kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml"
-                        sh "kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=180s"
-                        sh "kubectl patch deployment ingress-nginx-controller -n ingress-nginx --type=json --patch-file k8s/nginx-patch-json.json"
-                        sh "kubectl delete validatingwebhookconfiguration ingress-nginx-admission 2>/dev/null || true"
-                        sh "kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=180s"
-                    } else {
-                        echo '=== NGINX deja installe, skip ==='
-                    }
-                }
-            }
-        }
-
-        stage('Deploy Kubernetes') {
-            steps {
-                echo '=== Apply namespace ==='
-                sh "kubectl apply -f k8s/namespace.yaml"
-
-                echo '=== Deploy infrastructure ==='
-                sh "kubectl apply -f k8s/infrastructure/"
-
-                echo '=== Attente infrastructure (30s) ==='
-                sh "sleep 30"
-
-                echo '=== Deploy microservices ==='
-                sh "kubectl apply -f k8s/services/"
-
-                echo '=== Deploy frontend ==='
-                sh "kubectl apply -f k8s/frontend.yaml"
-
-                echo '=== Deploy Ingress ==='
-                sh "kubectl apply -f k8s/ingress/ingress.yaml"
-
-                echo '=== Deploy Istio config ==='
-                sh "kubectl apply -f k8s/istio/"
-            }
-        }
-
-        stage('Rollout Restart') {
-            steps {
-                script {
-                    def deployments = [
-                        'api-gateway',
-                        'identity-service',
-                        'order-service',
-                        'payment-service',
-                        'product-service',
-                        'email-service',
-                        'service-registry',
-                        'frontend'
-                    ]
-                    deployments.each { dep ->
-                        echo "=== Restart: ${dep} ==="
-                        sh "kubectl rollout restart deployment/${dep} -n ${NAMESPACE}"
-                    }
-                }
-            }
-        }
-
-        stage('Verify') {
-            steps {
-                echo '=== Attente que tous les pods soient Ready ==='
+                echo '=== Mise a jour kubeconfig KIND ==='
                 sh """
-                    kubectl wait --for=condition=ready pod \
-                        --all -n ${NAMESPACE} \
-                        --timeout=300s
+                    kind export kubeconfig \
+                        --name ${CLUSTER_NAME} \
+                        --kubeconfig /var/jenkins_home/.kube/config
                 """
-
-                echo '=== Attente Eureka propagation (3 min) ==='
-                sh "sleep 180"
-
-                echo '=== Etat final des pods ==='
-                sh "kubectl get pods -n ${NAMESPACE}"
-
-                echo '=== Etat Ingress ==='
-                sh "kubectl get ingress -n ${NAMESPACE}"
             }
         }
     }
@@ -212,8 +98,6 @@ pipeline {
         }
         failure {
             echo '❌ Pipeline echoue'
-            sh "PATH=/usr/local/bin:\$PATH kubectl get pods -n ${NAMESPACE} || true"
-            sh "PATH=/usr/local/bin:\$PATH kubectl get events -n ${NAMESPACE} --sort-by=.lastTimestamp | tail -20 || true"
         }
     }
 }
