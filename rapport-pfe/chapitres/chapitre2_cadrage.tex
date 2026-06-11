@@ -1,0 +1,224 @@
+\chapter{Problématique et cahier des charges}
+\clearpage
+
+\section{Introduction}
+
+Ce chapitre présente le cadrage du projet de fin d'études. Il décrit le contexte technique et organisationnel, la problématique traitée, les motivations du projet, les objectifs visés, la méthodologie suivie, les livrables attendus ainsi que le planning prévisionnel.
+
+\section{Contexte du projet}
+
+La sécurité des applications constitue aujourd'hui un enjeu majeur pour les organisations développant ou exploitant des logiciels critiques. Les attaques visant les applications, les API, les chaînes d'intégration continue, les dépendances logicielles et les environnements de déploiement imposent une évolution des pratiques de développement. La sécurité ne peut plus être considérée comme une activité réalisée uniquement en fin de projet ; elle doit être intégrée de manière progressive, automatisée et mesurable tout au long du cycle de vie logiciel.
+
+Dans ce contexte, le référentiel \textit{PCI Secure Software Framework} (PCI SSF) fournit un cadre structuré permettant d'évaluer la sécurité des logiciels de paiement et des processus de développement associés. Il met l'accent sur la protection des données sensibles, la maîtrise des vulnérabilités, la gestion sécurisée du cycle de vie logiciel, la traçabilité des activités et l'amélioration continue des pratiques de sécurité.
+
+\section{Problématique}
+
+L'intégration de la conformité PCI SSF dans un environnement DevSecOps soulève plusieurs défis. Les équipes doivent concilier la rapidité des cycles de développement, l'automatisation des livraisons, la complexité des architectures applicatives et les exigences strictes d'un référentiel de sécurité. Cette situation impose de transformer les exigences de conformité en contrôles concrets, intégrables dans les processus et vérifiables par des preuves objectives.
+
+\begin{quote}
+    \textbf{Comment intégrer efficacement les exigences du PCI Secure Software Framework dans un cycle de vie DevSecOps afin d'améliorer la sécurité des applications, d'assurer la traçabilité des contrôles et de faciliter l'évaluation de la conformité ?}
+\end{quote}
+
+\section{Motivations du projet}
+
+La réalisation de ce projet est motivée par la nécessité de renforcer la sécurité des logiciels de paiement tout en améliorant la capacité de l'organisation à démontrer sa conformité. Dans un environnement DevSecOps, l'objectif est de passer d'une conformité ponctuelle et manuelle à une conformité continue, structurée et intégrée aux processus de développement.
+
+\section{Objectifs du projet}
+
+\subsection{Objectif général}
+
+L'objectif général du projet est de mettre en place et d'évaluer une démarche d'intégration des exigences PCI SSF dans un cycle de développement DevSecOps, afin d'améliorer la sécurité des applications tout au long de leur cycle de vie et de faciliter la démonstration de conformité.
+
+\subsection{Objectifs spécifiques}
+
+\begin{enumerate}
+    \item analyser le référentiel PCI SSF et identifier les exigences pertinentes ;
+    \item étudier le cycle DevSecOps existant et les pratiques de sécurité associées ;
+    \item construire une matrice de correspondance entre exigences PCI SSF, pratiques DevSecOps et preuves attendues ;
+    \item proposer des contrôles techniques et organisationnels adaptés aux phases du cycle de vie logiciel ;
+    \item identifier les contrôles pouvant être automatisés dans les pipelines CI/CD ;
+    \item définir une méthode de collecte et d'organisation des preuves de conformité ;
+    \item évaluer la démarche proposée et formuler des recommandations.
+\end{enumerate}
+
+\section{Méthodologie}
+
+\begin{longtable}{>{\bfseries}p{3.2cm}p{11cm}}
+    \caption{Méthodologie suivie durant le projet}
+    \label{tab:methode-projet} \\
+    \toprule
+    Phase & Description \\
+    \midrule
+    \endfirsthead
+    \toprule
+    Phase & Description \\
+    \midrule
+    \endhead
+    Cadrage & Compréhension du contexte, définition du périmètre et clarification des objectifs. \\
+    Analyse du référentiel & Lecture structurée du PCI SSF et extraction des exigences applicables. \\
+    Étude de l'existant & Analyse du cycle DevSecOps, des outils et des pratiques de sécurité existantes. \\
+    Cartographie & Mise en correspondance des exigences PCI SSF avec les activités DevSecOps et les preuves attendues. \\
+    Proposition & Définition d'une démarche cible intégrant les contrôles de sécurité et de conformité. \\
+    Évaluation & Analyse de la couverture, identification des limites et recommandations d'amélioration. \\
+    \bottomrule
+\end{longtable}
+
+\section{Livrables attendus}
+
+Les livrables attendus du projet sont :
+
+\begin{itemize}
+    \item une analyse structurée des exigences PCI SSF applicables ;
+    \item une cartographie entre exigences, contrôles DevSecOps et preuves de conformité ;
+    \item une proposition de démarche d'intégration de la conformité PCI SSF ;
+    \item des recommandations d'automatisation des contrôles dans les pipelines CI/CD ;
+    \item un rapport de synthèse présentant la démarche, les résultats et les perspectives.
+\end{itemize}
+
+\section{Planning prévisionnel}
+
+\begin{table}[h!]
+    \centering
+    \caption{Planning prévisionnel du projet}
+    \label{tab:planning-projet}
+    \begin{tabularx}{\textwidth}{>{\bfseries}p{3cm}X}
+        \toprule
+        Période & Activités prévues \\
+        \midrule
+        Mois 1 & Découverte du contexte, cadrage du sujet et prise en main de l'environnement. \\
+        Mois 2 & Analyse du référentiel PCI SSF et identification des exigences applicables. \\
+        Mois 3 & Étude du cycle DevSecOps et cartographie des contrôles existants. \\
+        Mois 4 & Proposition de la démarche cible et formalisation des preuves attendues. \\
+        Mois 5 & Étude des possibilités d'automatisation et validation avec l'équipe d'accueil. \\
+        Mois 6 & Évaluation, consolidation des livrables et finalisation du rapport. \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\begin{figure}[h!]
+    \centering
+    % TODO : remplacer \ImageGantt par le diagramme de Gantt réel.
+    \safeincludegraphics[width=0.9\textwidth]{\ImageGantt}{Diagramme de Gantt prévisionnel}
+    \caption{Planning du projet par diagramme de Gantt}
+    \label{fig:gantt-projet}
+\end{figure}
+
+\section{Étude de l'existant}
+
+Avant de définir la solution cible, il convient d'analyser l'environnement existant au sein de l'équipe Software Security de la Direction Software Factory. Cette analyse permet d'identifier les pratiques en place, les outils utilisés et les lacunes à combler.
+
+\subsection{Pratiques DevSecOps actuelles}
+
+L'équipe Software Security dispose d'un environnement DevSecOps partiellement structuré, reposant sur des outils reconnus dans le domaine de la sécurité applicative. Ces pratiques s'articulent autour des axes suivants :
+
+\begin{itemize}
+    \item \textbf{Gestion du code source et pipelines CI/CD} : Les pipelines automatisés couvrent les phases de construction, de test et de livraison. Certains outils d'analyse de sécurité sont déjà intégrés, notamment des analyses statiques du code source (SAST) via Checkmarx et des scans de vulnérabilités sur les images conteneurs via Trivy ;
+    \item \textbf{Architecture applicative sécurisée} : L'application est construite sur une architecture microservices Spring Boot déployée sur Kubernetes. Des mécanismes de sécurité sont en place : authentification par JWT, politiques d'autorisation Istio, communication chiffrée mTLS, gestion des secrets via HashiCorp Vault (External Secrets Operator) et limitation de débit au niveau du service mesh ;
+    \item \textbf{Tests de sécurité} : Des tests de pénétration sont effectués de manière ponctuelle. Des analyses de composition logicielle (SCA) permettent de détecter les dépendances vulnérables dans les artefacts construits ;
+    \item \textbf{Gestion des incidents et des correctifs} : L'équipe assure le suivi des vulnérabilités identifiées par les outils ou signalées lors des audits, et accompagne les équipes de développement dans leur remédiation.
+\end{itemize}
+
+\subsection{Limites de l'existant}
+
+Malgré ces pratiques, plusieurs lacunes subsistent et justifient la démarche proposée dans ce projet :
+
+\begin{itemize}
+    \item \textbf{Absence de cartographie formelle} : les exigences PCI SSF ne sont pas encore mises en correspondance de manière systématique avec les activités DevSecOps, les contrôles associés et les preuves attendues ;
+    \item \textbf{Automatisation partielle} : certains contrôles de sécurité ne sont pas intégrés dans les pipelines CI/CD et restent réalisés manuellement, ce qui limite la répétabilité et la traçabilité ;
+    \item \textbf{Preuves de conformité non centralisées} : les éléments de preuve produits lors des activités de sécurité ne sont pas organisés en vue d'un audit PCI SSF ; leur collecte reste manuelle et non structurée ;
+    \item \textbf{Visibilité insuffisante} : il n'existe pas de tableau de bord permettant de visualiser la couverture des exigences PCI SSF ni de mesurer l'état de conformité à un instant donné ;
+    \item \textbf{Processus non formalisé} : la démarche de remédiation, de validation des contrôles et d'escalade en cas de non-conformité n'est pas documentée de manière opérationnelle.
+\end{itemize}
+
+\section{Analyse des besoins}
+
+À partir de l'étude de l'existant et de la problématique identifiée, les besoins du projet sont classés en besoins fonctionnels et en besoins non fonctionnels.
+
+\subsection{Besoins fonctionnels}
+
+\begin{enumerate}
+    \item \textbf{Analyse du référentiel PCI SSF} : identifier, documenter et interpréter les exigences du PCI SSF applicables au contexte d'HPS, en distinguant celles relevant du standard logiciel (PCI Secure Software Standard) de celles portant sur le cycle de vie (PCI Secure Software Lifecycle) ;
+    \item \textbf{Cartographie des exigences} : établir une correspondance structurée entre les exigences PCI SSF, les phases du cycle DevSecOps, les contrôles associés et les preuves attendues ;
+    \item \textbf{Définition des contrôles} : spécifier les contrôles techniques (SAST, SCA, DAST, scan d'images, scan d'infrastructure, détection de secrets) et organisationnels (revue de code, formation, gestion des accès) nécessaires à la couverture des exigences ;
+    \item \textbf{Automatisation dans les pipelines CI/CD} : identifier les contrôles pouvant être intégrés dans les pipelines d'intégration et de déploiement continus, et proposer des configurations adaptées aux outils existants ;
+    \item \textbf{Gestion des preuves de conformité} : définir un processus permettant de collecter, d'organiser, de versionner et de maintenir les preuves de conformité de manière centralisée et auditable ;
+    \item \textbf{Évaluation de la couverture} : proposer une méthode d'évaluation permettant de mesurer le taux de couverture des exigences PCI SSF et d'identifier les écarts résiduels.
+\end{enumerate}
+
+\subsection{Besoins non fonctionnels}
+
+\begin{table}[h!]
+    \centering
+    \caption{Besoins non fonctionnels du projet}
+    \label{tab:besoins-nf}
+    \begin{tabularx}{\textwidth}{>{\bfseries}p{3.5cm}X}
+        \toprule
+        Critère & Description \\
+        \midrule
+        Traçabilité & Chaque contrôle doit être lié de manière explicite à une ou plusieurs exigences PCI SSF, afin d'assurer la traçabilité de bout en bout. \\
+        Maintenabilité & La démarche doit être évolutive et adaptable aux révisions futures du référentiel PCI SSF ou aux changements de l'environnement technique. \\
+        Opérationnalité & Les contrôles proposés doivent être réalisables dans le contexte technique d'HPS, en tenant compte des outils et des contraintes existants. \\
+        Auditabilité & Les preuves de conformité doivent être organisées de manière à faciliter les évaluations par des auditeurs externes ou internes. \\
+        Reproductibilité & Les contrôles automatisés doivent produire des résultats stables et reproductibles à chaque exécution du pipeline. \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\section{Solution proposée}
+
+La solution retenue est une \textbf{démarche structurée d'intégration des exigences PCI SSF dans le cycle DevSecOps d'HPS}. Elle s'articule autour de trois composantes complémentaires.
+
+\subsection{Cartographie PCI SSF et DevSecOps}
+
+La première composante consiste à élaborer une matrice de correspondance entre les exigences PCI SSF et les activités du cycle de vie DevSecOps. Cette matrice met en relation :
+
+\begin{itemize}
+    \item les exigences PCI SSF (par famille et par contrôle) ;
+    \item les phases du cycle DevSecOps auxquelles elles s'appliquent (conception, développement, test, déploiement, exploitation, maintenance) ;
+    \item les contrôles techniques ou organisationnels permettant d'y répondre ;
+    \item les preuves attendues pour démontrer la conformité lors d'un audit.
+\end{itemize}
+
+Cette cartographie constitue le socle opérationnel de la démarche. Elle permet de visualiser les correspondances, d'identifier les exigences couvertes et d'orienter les efforts vers les lacunes les plus critiques.
+
+\subsection{Contrôles de sécurité intégrés au cycle DevSecOps}
+
+La deuxième composante concerne la définition et l'intégration de contrôles de sécurité dans les différentes phases du cycle de développement. Parmi ces contrôles, certains sont directement automatisables dans les pipelines CI/CD existants :
+
+\begin{itemize}
+    \item \textbf{Analyse statique du code source (SAST)} : détection des vulnérabilités dans le code applicatif dès la phase de développement ;
+    \item \textbf{Analyse des dépendances (SCA)} : identification des composants tiers vulnérables ou dont la licence est non conforme ;
+    \item \textbf{Analyse dynamique (DAST)} : tests de sécurité en conditions d'exécution sur les environnements de recette ou de pré-production ;
+    \item \textbf{Scan des images conteneurs} : vérification de la conformité et des vulnérabilités connues dans les images Docker avant déploiement ;
+    \item \textbf{Scan de l'infrastructure as code (IaC)} : détection des mauvaises configurations dans les manifestes Kubernetes, les politiques Istio ou les fichiers Helm ;
+    \item \textbf{Détection de secrets} : vérification de l'absence de secrets, tokens ou credentials dans le code source ou les configurations versionnées.
+\end{itemize}
+
+Des contrôles organisationnels viennent compléter ces mesures techniques : revue de code sécurisée, politiques de gestion des accès, processus de formation des développeurs et procédures de réponse aux incidents.
+
+\subsection{Gestion des preuves de conformité}
+
+La troisième composante porte sur la mise en place d'un processus de collecte et d'organisation des preuves de conformité. Ce processus doit permettre :
+
+\begin{itemize}
+    \item d'associer chaque preuve à une ou plusieurs exigences PCI SSF ;
+    \item de centraliser les preuves dans un référentiel structuré et accessible ;
+    \item de versionner les preuves afin de refléter l'évolution de la conformité dans le temps ;
+    \item de préparer efficacement la documentation nécessaire à une évaluation PCI SSF externe.
+\end{itemize}
+
+La figure~\ref{fig:solution-globale} présente une vue synthétique de la solution proposée, illustrant l'articulation entre la cartographie, les contrôles DevSecOps et la gestion des preuves.
+
+\begin{figure}[h!]
+    \centering
+    % TODO : insérer un schéma illustrant les trois composantes de la solution.
+    \safeincludegraphics[width=0.9\textwidth]{\ImageSolutionGlobale}{Vue globale de la solution proposée}
+    \caption{Vue globale de la démarche de conformité PCI SSF intégrée au cycle DevSecOps}
+    \label{fig:solution-globale}
+\end{figure}
+
+\section{Bilan}
+
+Ce chapitre a défini le cadre du projet, sa problématique, ses objectifs et la méthodologie suivie. L'étude de l'existant a mis en évidence les pratiques DevSecOps déjà en place au sein de l'équipe Software Security, ainsi que les lacunes persistantes en matière de cartographie, d'automatisation et de gestion des preuves. L'analyse des besoins a permis de formaliser les attentes fonctionnelles et non fonctionnelles, tandis que la solution proposée repose sur trois composantes complémentaires : une cartographie PCI SSF/DevSecOps, un ensemble de contrôles de sécurité intégrés aux pipelines, et un processus structuré de gestion des preuves. Ces éléments constituent la base de travail pour les chapitres suivants, qui approfondiront les concepts liés au PCI SSF, au DevSecOps et à la démarche proposée.
+
+\clearpage

@@ -1,0 +1,317 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{hyperref}
+
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\onehalfspacing
+\setlist[itemize]{label=--,leftmargin=1.2cm}
+\setlist[enumerate]{leftmargin=1.2cm}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black
+}
+
+\newcommand{\placeholder}[1]{%
+    \fbox{%
+        \begin{minipage}[c][4cm][c]{0.9\textwidth}
+            \centering\small\textit{#1}
+        \end{minipage}
+    }%
+}
+
+\begin{document}
+
+% =====================================================================
+% Chapitre 1 - A intégrer dans le rapport principal si un template existe.
+% Titre recommandé du rapport :
+% "Conception et mise en oeuvre d'une démarche de conformité PCI Secure
+% Software Framework (PCI SSF) intégrée à un cycle DevSecOps"
+% =====================================================================
+
+\chapter{Cadre général du projet}
+
+\section{Introduction}
+
+Ce premier chapitre présente le cadre général dans lequel s'inscrit le projet de fin d'études intitulé \textit{Conception et mise en oeuvre d'une démarche de conformité PCI Secure Software Framework (PCI SSF) intégrée à un cycle DevSecOps}. Il introduit d'abord l'organisme d'accueil, son positionnement, ses activités principales ainsi que son organisation interne. Il met ensuite l'accent sur l'entité d'affectation et sur l'équipe ayant encadré le stage.
+
+Dans un second temps, le chapitre expose le contexte professionnel et technique du projet, la problématique traitée, les motivations ayant conduit à sa réalisation, les objectifs visés et la méthodologie suivie. Il se termine par une planification prévisionnelle permettant de structurer les différentes phases du stage et par une conclusion synthétisant les éléments essentiels du chapitre.
+
+\section{Présentation de l'entreprise d'accueil}
+
+Hightech Payment Systems, généralement désignée par l'acronyme \textbf{HPS}, est une entreprise multinationale marocaine spécialisée dans les solutions de paiement électronique. Elle s'adresse principalement aux institutions financières, aux processeurs de paiement ainsi qu'aux switches nationaux et régionaux. Son activité se situe au croisement de la monétique, de l'ingénierie logicielle et de la cybersécurité applicative.
+
+Fondée à Casablanca, HPS s'est progressivement imposée comme un acteur important du secteur des paiements numériques. Son offre repose notamment sur la suite logicielle \textbf{PowerCARD}, une plateforme destinée à couvrir plusieurs besoins liés à l'émission de cartes, à l'acquisition, au traitement des transactions, au switch, à la lutte contre la fraude et à la gestion de services de paiement via différents canaux tels que les guichets automatiques, les terminaux de paiement, le web et le mobile.
+
+Les solutions développées par HPS sont utilisées dans des environnements où la disponibilité, la performance, la confidentialité et l'intégrité des données constituent des exigences majeures. Cette réalité explique l'importance accordée par l'entreprise aux référentiels de sécurité, à la conformité réglementaire et aux pratiques de développement sécurisé, en particulier dans le cadre du \textit{PCI Secure Software Framework} (PCI SSF).
+
+\begin{figure}[h!]
+    \centering
+    % TODO : Remplacer cet emplacement par le logo HPS ou une carte de sa présence internationale.
+    \placeholder{Emplacement réservé pour le logo HPS ou la présence internationale de HPS}
+    \caption{Présentation générale de HPS}
+    \label{fig:presentation-entreprise}
+\end{figure}
+
+\subsection{Fiche technique de l'entreprise}
+
+La fiche technique ci-dessous regroupe les principales informations administratives et organisationnelles relatives à l'entreprise d'accueil. Elle constitue une vue synthétique permettant de situer l'organisme avant d'aborder son historique, ses activités et sa structure interne.
+
+\begin{table}[h!]
+    \centering
+    \caption{Fiche technique de HPS}
+    \label{tab:fiche-technique-entreprise}
+    \begin{tabularx}{\textwidth}{>{\bfseries}p{4.2cm}X}
+        \toprule
+        Raison sociale & Hightech Payment Systems \\
+        \midrule
+        Sigle & HPS \\
+        Secteur d'activité & Monétique et solutions de paiement électronique \\
+        Année de création & 1995 \\
+        Siège social & Casablanca, Maroc \\
+        Présence internationale & Plus de 90 pays sur les cinq continents \\
+        Effectif & Plus de 1000 experts et consultants \\
+        Domaine d'expertise & Développement de solutions de paiement, traitement des transactions, sécurité logicielle et conformité \\
+        Produit principal & Suite logicielle PowerCARD \\
+        Marché cible & Banques, institutions financières, processeurs de paiement, switches nationaux et régionaux \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\section{Historique et activités de l'entreprise}
+
+Depuis sa création, HPS a progressivement développé son expertise autour de la conception de solutions logicielles dédiées aux paiements électroniques. Son évolution s'est construite autour de plusieurs axes : l'élargissement de son portefeuille de produits, l'ouverture vers les marchés internationaux, l'amélioration continue de ses processus internes et l'adoption de référentiels de qualité, de sécurité et de conformité adaptés aux exigences du secteur financier.
+
+Les principales étapes de son développement peuvent être présentées comme suit :
+
+\begin{itemize}
+    \item \textbf{1995} : création de HPS à Casablanca.
+    \item \textbf{1996} : signature des premiers contrats.
+    \item \textbf{2003} : ouverture de HPS Dubai et obtention de la certification ISO 9001.
+    \item \textbf{2006} : introduction de HPS à la Bourse de Casablanca.
+    \item \textbf{2010} : acquisition d'ACPQualife.
+    \item \textbf{2012} : obtention d'un label relatif à la responsabilité sociale et environnementale.
+    \item \textbf{2015} : création de la fondation HPS.
+    \item \textbf{2016} : lancement de l'activité Processing pour le traitement des transactions de paiement.
+    \item \textbf{2021} : acquisition d'ICPS et d'IPRC.
+    \item \textbf{2024} : consolidation de la présence internationale de HPS dans plus de 90 pays.
+\end{itemize}
+
+Les activités de HPS couvrent principalement la conception, le développement, l'intégration et la maintenance de solutions de paiement électronique. La suite PowerCARD constitue le coeur de son offre. Elle permet de gérer plusieurs domaines fonctionnels, notamment l'émission de cartes, l'acquisition commerçant, le switch, la gestion de la fraude, les paiements mobiles, la tokenisation et les services associés aux transactions électroniques.
+
+Dans le cadre du présent projet, l'activité la plus directement concernée est celle liée à la sécurité logicielle et à la conformité des solutions de paiement. En effet, les applications manipulant des données de paiement doivent répondre à des exigences strictes en matière de confidentialité, d'intégrité, de disponibilité, de traçabilité et de maîtrise des vulnérabilités.
+
+\begin{figure}[h!]
+    \centering
+    % TODO : Remplacer par une frise chronologique réelle de HPS.
+    \placeholder{Emplacement réservé pour la frise chronologique de HPS}
+    \caption{Historique de HPS}
+    \label{fig:historique-entreprise}
+\end{figure}
+
+\section{Organisation interne}
+
+L'organisation interne de HPS repose sur une répartition fonctionnelle des responsabilités. Cette structuration vise à assurer la coordination entre les pôles métiers, les équipes techniques, les fonctions support et les instances de pilotage. Elle permet également d'aligner les objectifs opérationnels avec les exigences de qualité, de sécurité et de conformité propres au secteur des paiements.
+
+De manière générale, l'entreprise peut être organisée autour des entités suivantes :
+
+\begin{itemize}
+    \item une direction générale chargée de la stratégie, de la gouvernance et du pilotage global ;
+    \item des directions métiers orientées vers les solutions de paiement et les besoins des clients ;
+    \item une direction Software Factory responsable de l'industrialisation du développement logiciel ;
+    \item des entités dédiées à l'architecture, au cycle de vie logiciel, à la qualité, à la sécurité et à la conformité ;
+    \item des équipes projets organisées selon les produits, les modules PowerCARD ou les domaines fonctionnels.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    % TODO : Remplacer par l'organigramme officiel de HPS.
+    \placeholder{Emplacement réservé pour l'organigramme de HPS}
+    \caption{Organisation interne de HPS}
+    \label{fig:organigramme-entreprise}
+\end{figure}
+
+\section{Présentation du département d'affectation}
+
+Le stage s'est déroulé au sein de la \textbf{Direction Software Factory}, une entité dont la mission consiste à industrialiser le processus de développement logiciel. Cette direction vise à standardiser, automatiser et améliorer les différentes étapes du cycle de vie logiciel afin de produire des solutions robustes, maintenables et conformes aux exigences internes et externes.
+
+La Software Factory regroupe plusieurs branches liées à l'architecture interne, à l'architecture logicielle, au cycle de vie du développement logiciel et au développement de solutions. Dans le cadre d'une démarche DevSecOps, cette entité joue un rôle central dans la diffusion des pratiques de sécurité auprès des équipes projet. Elle contribue notamment à la définition des règles de développement sécurisé, à l'automatisation des contrôles de sécurité, à la revue des livrables techniques, à la gestion des risques et à la préparation des éléments de preuve nécessaires aux audits ou évaluations de conformité.
+
+\subsection{Missions principales du département}
+
+Les principales missions du département peuvent être résumées comme suit :
+
+\begin{itemize}
+    \item industrialiser les pratiques de développement logiciel ;
+    \item améliorer la qualité et la maintenabilité des solutions développées ;
+    \item accompagner les équipes dans l'application du cycle de vie logiciel sécurisé ;
+    \item intégrer des contrôles de sécurité dans les processus de développement et de livraison ;
+    \item assurer la cohérence entre les pratiques techniques, les exigences qualité et les exigences de conformité.
+\end{itemize}
+
+\section{Présentation de l'équipe d'accueil}
+
+L'équipe d'accueil est l'équipe \textbf{Software Security}, rattachée au département SDLC de la Direction Software Factory. Elle intervient sur les sujets liés à la sécurité applicative, à l'industrialisation des contrôles et à l'amélioration continue du cycle de développement. Elle joue un rôle important dans la promotion des bonnes pratiques de développement sécurisé et dans l'accompagnement des équipes projet.
+
+Ses missions couvrent notamment la définition et l'application des politiques de sécurité logicielle, la réalisation ou la supervision de tests de sécurité, la conduite de revues de code, la gestion des incidents de sécurité logicielle, le suivi des correctifs issus des audits ou des tests de pénétration, ainsi que la production de documentation liée au durcissement, à la modélisation des menaces et aux exigences de conformité.
+
+L'équipe Software Security contribue également à la préparation et au maintien de certifications liées à la sécurité des logiciels, dont PCI SSS et PCI SSF. Elle participe enfin à la formation des développeurs afin de renforcer leur maîtrise des pratiques de développement sécurisé.
+
+\subsection{Méthodologie et outils de travail}
+
+L'équipe adopte une méthodologie Agile favorisant la collaboration continue, l'adaptation aux changements, la livraison incrémentale et l'amélioration continue. Cette approche permet d'intégrer progressivement les exigences de sécurité dans les activités quotidiennes des équipes de développement.
+
+Les principaux outils utilisés dans ce cadre sont les suivants :
+
+\begin{itemize}
+    \item \textbf{Jira} : outil de gestion de projet utilisé pour planifier, suivre et piloter les tâches ;
+    \item \textbf{Bitbucket / Git} : plateforme de gestion du code source et de suivi des versions ;
+    \item \textbf{Confluence} : outil collaboratif utilisé pour documenter les processus, les décisions techniques et les bonnes pratiques.
+\end{itemize}
+
+\subsection{Rôle du pentester dans l'équipe}
+
+Dans une organisation Agile, le rôle du pentester consiste à contribuer à la sécurité du produit tout au long du cycle de développement. Ses responsabilités incluent la réalisation de tests manuels, l'élaboration de scénarios de test, la production de scripts d'automatisation, la participation aux réunions de suivi et la formulation de recommandations techniques à destination des équipes de développement.
+
+\begin{figure}[h!]
+    \centering
+    % TODO : Remplacer par un schéma de l'équipe Software Security ou du processus de collaboration.
+    \placeholder{Emplacement réservé pour la structure de l'équipe Software Security}
+    \caption{Positionnement de l'équipe Software Security dans le cycle DevSecOps}
+    \label{fig:equipe-accueil}
+\end{figure}
+
+\section{Contexte du stage}
+
+La sécurité des applications constitue aujourd'hui un enjeu majeur pour les organisations développant ou exploitant des logiciels critiques. Les attaques visant les applications, les API, les chaînes d'intégration continue, les dépendances logicielles et les environnements de déploiement imposent une évolution des pratiques de développement. La sécurité ne peut plus être considérée comme une activité réalisée uniquement en fin de projet ; elle doit être intégrée de manière progressive, automatisée et mesurable tout au long du cycle de vie logiciel.
+
+Dans ce contexte, le référentiel \textit{PCI Secure Software Framework} (PCI SSF) fournit un cadre structuré permettant d'évaluer la sécurité des logiciels de paiement et des processus de développement associés. Il met l'accent sur la protection des données sensibles, la maîtrise des vulnérabilités, la gestion sécurisée du cycle de vie logiciel, la traçabilité des activités et l'amélioration continue des pratiques de sécurité.
+
+Le présent stage s'inscrit dans cette dynamique. Il vise à étudier l'application des exigences PCI SSF dans un cycle DevSecOps, puis à proposer une démarche permettant de mieux intégrer ces exigences dans les pratiques existantes. L'objectif n'est pas uniquement documentaire ; il s'agit également de construire une approche opérationnelle, mesurable et exploitable par les équipes techniques.
+
+\section{Problématique}
+
+L'intégration de la conformité PCI SSF dans un environnement DevSecOps soulève plusieurs défis. Les équipes doivent concilier la rapidité des cycles de développement, l'automatisation des livraisons, la complexité des architectures applicatives et les exigences strictes d'un référentiel de sécurité. Cette situation impose de transformer les exigences de conformité en contrôles concrets, intégrables dans les processus et vérifiables par des preuves objectives.
+
+La problématique principale du projet peut donc être formulée comme suit :
+
+\begin{quote}
+    \textbf{Comment intégrer efficacement les exigences du PCI Secure Software Framework dans un cycle de vie DevSecOps afin d'améliorer la sécurité des applications, d'assurer la traçabilité des contrôles et de faciliter l'évaluation de la conformité ?}
+\end{quote}
+
+Cette problématique se décline en plusieurs questions secondaires :
+
+\begin{itemize}
+    \item comment identifier les exigences PCI SSF applicables au contexte de l'entreprise ?
+    \item comment établir une correspondance entre ces exigences et les activités du cycle DevSecOps ?
+    \item quels contrôles peuvent être automatisés dans les pipelines de développement et de déploiement ?
+    \item comment produire, centraliser et maintenir les preuves de conformité ?
+    \item comment mesurer l'efficacité de la démarche proposée et son impact sur la sécurité logicielle ?
+\end{itemize}
+
+\section{Motivations du projet}
+
+La réalisation de ce projet est motivée par plusieurs facteurs. D'une part, les applications modernes sont exposées à un niveau de risque croissant en raison de la multiplication des composants, des dépendances tierces, des interfaces programmatiques et des environnements distribués. D'autre part, les exigences réglementaires et normatives imposent aux organisations de démontrer leur capacité à développer, maintenir et exploiter des logiciels sécurisés.
+
+Dans le domaine des logiciels liés au paiement ou manipulant des données sensibles, la conformité PCI SSF représente un levier important de confiance. Elle permet de structurer les pratiques de sécurité, de réduire l'exposition aux vulnérabilités et de renforcer la crédibilité de l'organisation auprès de ses clients, partenaires et auditeurs.
+
+Le projet présente également un intérêt opérationnel. En intégrant les exigences de conformité dans un cycle DevSecOps, il devient possible de passer d'une approche ponctuelle et manuelle de la conformité à une approche continue, industrialisée et traçable. Cette évolution contribue à réduire les efforts de préparation aux audits, à améliorer la visibilité sur l'état de sécurité des applications et à accélérer la détection des écarts.
+
+\section{Objectifs du projet}
+
+\subsection{Objectif général}
+
+L'objectif général du projet est de mettre en place et d'évaluer une démarche d'intégration des exigences PCI SSF dans un cycle de développement DevSecOps, afin d'améliorer la sécurité des applications tout au long de leur cycle de vie et de faciliter la démonstration de conformité.
+
+\subsection{Objectifs spécifiques}
+
+Pour atteindre cet objectif général, le projet poursuit les objectifs spécifiques suivants :
+
+\begin{enumerate}
+    \item analyser le référentiel PCI SSF et identifier les exigences pertinentes pour le contexte du projet ;
+    \item étudier le cycle DevSecOps existant et repérer les activités pouvant supporter des contrôles de conformité ;
+    \item construire une matrice de correspondance entre les exigences PCI SSF, les pratiques DevSecOps et les preuves attendues ;
+    \item proposer des contrôles techniques et organisationnels adaptés aux phases de conception, développement, test, intégration, déploiement et maintenance ;
+    \item définir des mécanismes d'automatisation pour les contrôles pouvant être intégrés dans les pipelines CI/CD ;
+    \item mettre en place une méthode de collecte et d'organisation des preuves de conformité ;
+    \item évaluer la démarche proposée à travers des critères tels que la couverture des exigences, la traçabilité, l'efficacité opérationnelle et la facilité de maintenance.
+\end{enumerate}
+
+\section{Méthodologie suivie}
+
+La méthodologie adoptée repose sur une démarche progressive combinant analyse documentaire, étude de l'existant, conception méthodologique, formalisation des contrôles et évaluation. Elle s'inspire des principes DevSecOps, qui favorisent l'intégration continue de la sécurité dans les processus de développement.
+
+\begin{longtable}{>{\bfseries}p{3.2cm}p{11cm}}
+    \caption{Méthodologie suivie durant le projet}
+    \label{tab:methode-projet} \\
+    \toprule
+    Phase & Description \\
+    \midrule
+    \endfirsthead
+    \toprule
+    Phase & Description \\
+    \midrule
+    \endhead
+    Cadrage & Compréhension du contexte, définition du périmètre, identification des parties prenantes et clarification des objectifs du stage. \\
+    Analyse du référentiel & Lecture structurée des exigences PCI SSF, extraction des exigences applicables et identification des livrables ou preuves attendus. \\
+    Étude de l'existant & Analyse du cycle DevSecOps en place, des outils utilisés, des processus de développement, des mécanismes de test et des pratiques de sécurité existantes. \\
+    Cartographie & Élaboration d'une correspondance entre exigences PCI SSF, activités DevSecOps, contrôles associés et preuves de conformité. \\
+    Proposition de démarche & Définition d'un processus cible intégrant les contrôles de sécurité et de conformité dans les différentes phases du cycle de vie logiciel. \\
+    Évaluation & Vérification de la cohérence de la démarche, estimation de sa couverture, identification des limites et formulation des recommandations d'amélioration. \\
+    \bottomrule
+\end{longtable}
+
+\section{Planning prévisionnel}
+
+La planification prévisionnelle du projet permet d'organiser les activités du stage selon une progression logique. Elle sert également de support de suivi pour mesurer l'avancement, identifier les éventuels retards et ajuster les priorités en fonction des contraintes rencontrées.
+
+% TODO : Adapter les périodes selon la durée réelle du stage.
+\begin{table}[h!]
+    \centering
+    \caption{Planning prévisionnel du projet}
+    \label{tab:planning-projet}
+    \begin{tabularx}{\textwidth}{>{\bfseries}p{3cm}X}
+        \toprule
+        Période & Activités prévues \\
+        \midrule
+        Mois 1 & Prise de connaissance du contexte, découverte de l'entreprise, compréhension du cycle DevSecOps existant et cadrage du sujet. \\
+        Mois 2 & Analyse du référentiel PCI SSF, identification des exigences applicables et étude des documents internes disponibles. \\
+        Mois 3 & Cartographie des exigences PCI SSF avec les phases du cycle DevSecOps et identification des contrôles existants ou manquants. \\
+        Mois 4 & Proposition d'une démarche cible de conformité, définition des contrôles techniques et organisationnels, préparation des modèles de preuves. \\
+        Mois 5 & Étude des possibilités d'automatisation, intégration conceptuelle des contrôles dans les pipelines CI/CD et validation avec l'équipe d'accueil. \\
+        Mois 6 & Évaluation de la démarche, rédaction des recommandations, consolidation des livrables et finalisation du rapport de PFE. \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\begin{figure}[h!]
+    \centering
+    % TODO : Remplacer cet emplacement par un diagramme de Gantt réel si disponible.
+    \placeholder{Emplacement réservé pour le diagramme de Gantt du projet}
+    \caption{Diagramme de Gantt prévisionnel du projet}
+    \label{fig:gantt-projet}
+\end{figure}
+
+\section{Conclusion du chapitre}
+
+Ce chapitre a présenté le cadre général du projet de fin d'études. Il a d'abord introduit l'entreprise d'accueil, son historique, ses activités, son organisation interne ainsi que l'entité et l'équipe d'affectation. Il a ensuite exposé le contexte du stage, marqué par la nécessité d'intégrer la sécurité et la conformité dans les cycles de développement logiciel modernes.
+
+La problématique retenue porte sur l'intégration des exigences PCI SSF dans un cycle DevSecOps, avec pour objectif d'améliorer la sécurité applicative, de renforcer la traçabilité des contrôles et de faciliter la préparation aux évaluations de conformité. Les objectifs généraux et spécifiques, la méthodologie suivie ainsi que le planning prévisionnel constituent la base de travail pour les chapitres suivants, qui approfondiront l'état de l'art, l'analyse des exigences, la conception de la démarche et son évaluation.
+
+\end{document}

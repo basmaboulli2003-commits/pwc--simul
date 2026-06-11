@@ -1,0 +1,33 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: require-jwt-on-apigw
+  namespace: microservices
+spec:
+  selector:
+    matchLabels:
+      app: api-gateway
+  action: ALLOW
+  rules:
+    # Règle 1: Endpoints publics SANS JWT — login, register, etc.
+    - to:
+        - operation:
+            paths:
+              - "/api/v1/auth/token"
+              - "/api/v1/auth/register"
+              - "/api/v1/auth/*"
+
+    # Règle 2: Tous les autres endpoints /api/* requièrent un JWT valide
+    - from:
+        - source:
+            requestPrincipals: ["*"]
+      to:
+        - operation:
+            paths:
+              - "/api/*"
+
+    # Règle 3: Tout le reste (autres paths) sans restriction
+    - to:
+        - operation:
+            paths:
+              - "/*"

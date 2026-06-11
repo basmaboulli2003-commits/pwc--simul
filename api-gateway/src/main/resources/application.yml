@@ -21,7 +21,7 @@ spring:
             - Method=GET
 
         - id: product-service-write
-          uri: http://host.docker.internal:8084
+          uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/api/v1/products/**
             - Method=POST,PUT,DELETE,OPTIONS

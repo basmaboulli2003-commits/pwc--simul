@@ -9,7 +9,7 @@ public class PaymentStatusConverter implements AttributeConverter<PaymentStatus,
 
     @Override
     public String convertToDatabaseColumn(PaymentStatus status) {
-        if(status == null){
+        if (status == null) {
             return null;
         }
         return status.getLabel();
@@ -17,13 +17,18 @@ public class PaymentStatusConverter implements AttributeConverter<PaymentStatus,
 
     @Override
     public PaymentStatus convertToEntityAttribute(String label) {
-        if(label == null){
+        if (label == null) {
             return null;
         }
-        return switch(label) {
-            case "Pending" -> PaymentStatus.PENDING;
-            case "Success" -> PaymentStatus.SUCCESS;
-            case "Failed" -> PaymentStatus.FAILED;
+        return switch (label) {
+            case "Pending"    -> PaymentStatus.PENDING;
+            case "Authorized" -> PaymentStatus.AUTHORIZED;
+            case "Captured"   -> PaymentStatus.CAPTURED;
+            case "Settled"    -> PaymentStatus.SETTLED;
+            case "Declined"   -> PaymentStatus.DECLINED;
+            case "Success"    -> PaymentStatus.SUCCESS;
+            case "Failed"     -> PaymentStatus.FAILED;
+            case "Refund"     -> PaymentStatus.REFUND;
             default -> throw new IllegalArgumentException("Unknown payment status: " + label);
         };
     }

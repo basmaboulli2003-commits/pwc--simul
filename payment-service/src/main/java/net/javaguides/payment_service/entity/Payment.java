@@ -10,7 +10,6 @@ import net.javaguides.payment_service.entity.converter.PaymentStatusConverter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,11 +18,18 @@ import java.util.Date;
 @Entity
 @Table(name = "payments")
 public class Payment extends AbstractEntity {
+
     @Id
     private String id;
 
     @Column(nullable = false)
     private String orderId;
+
+    @Column
+    private Long userId;
+
+    @Column
+    private String userEmail;
 
     @Column(nullable = false)
     private BigDecimal amount;
@@ -33,4 +39,19 @@ public class Payment extends AbstractEntity {
 
     @Convert(converter = PaymentStatusConverter.class)
     private PaymentStatus status;
+
+    @Column
+    private String authorizationCode;
+
+    @Column(length = 500)
+    private String declineReason;
+
+    @Column
+    private LocalDateTime authorizedAt;
+
+    @Column
+    private LocalDateTime capturedAt;
+
+    @Column
+    private LocalDateTime settledAt;
 }

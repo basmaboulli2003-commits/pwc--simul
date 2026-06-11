@@ -39,6 +39,7 @@ public class JwtServiceImpl implements JwtService {
         List<String> roles = userPrincipal.getRoleNames();
 
         return Jwts.builder()
+                .setIssuer("identity-service")
                 .setSubject(userPrincipal.getUsername())
                 .claim("roles", roles)
                 .claim("permissions", userPrincipal.getPermissions())

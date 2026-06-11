@@ -1,0 +1,23 @@
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: jwt-on-apigw
+  namespace: microservices
+spec:
+  selector:
+    matchLabels:
+      app: api-gateway
+  jwtRules:
+    - issuer: "identity-service"
+      jwks: |
+        {
+          "keys": [
+            {
+              "kty": "oct",
+              "alg": "HS256",
+              "k": "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437",
+              "use": "sig"
+            }
+          ]
+        }
+      forwardOriginalToken: truedocker

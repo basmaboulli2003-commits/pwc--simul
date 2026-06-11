@@ -1,0 +1,30 @@
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: gmail-smtp
+  namespace: microservices
+spec:
+  hosts:
+    - smtp.gmail.com
+  ports:
+    - number: 587
+      name: smtp
+      protocol: TCP
+  location: MESH_EXTERNAL
+  resolution: DNS
+---
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: paypal-sandbox
+  namespace: microservices
+spec:
+  hosts:
+    - api.sandbox.paypal.com
+    - api-m.sandbox.paypal.com
+  ports:
+    - number: 443
+      name: https
+      protocol: HTTPS
+  location: MESH_EXTERNAL
+  resolution: DNS
