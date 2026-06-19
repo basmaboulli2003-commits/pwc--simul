@@ -1,20 +1,25 @@
+
 pipeline {
     agent any
-
+ 
     tools {
         maven 'Maven-3.9'
         jdk 'JDK-17'
     }
-
+ 
     environment {
         // Configurable values
         KIND_CLUSTER  = 'microservices-cluster'
         K8S_NAMESPACE = 'microservices'
         IMAGE_TAG     = "${env.BUILD_NUMBER}"
+ 
+        // --- Checkmarx config (nom identique à chaque run = un seul projet) ---
+        CX_PROJECT = 'pwc-simul'
+        CX_BRANCH  = 'main'
     }
-
+ 
     stages {
-
+ 
         // STEP 1 — Checkout source
         stage('Checkout') {
             steps {
@@ -22,8 +27,29 @@ pipeline {
                 checkout scm
             }
         }
-
-        // STEP 2 — Build common-lib first (other services depend on it)
+ 
+        // STEP 2 — SAST scan (shift-left : on scanne le code AVANT de builder/déployer)
+        stage('SAST - Checkmarx') {
+            steps {
+                echo '=== Running Checkmarx SAST scan ==='
+                withCredentials([string(credentialsId: 'cx-api-key', variable: 'CX_APIKEY')]) {
+                    sh '''
+                        cx scan create \
+                          --project-name "${CX_PROJECT}" \
+                          --branch "${CX_BRANCH}" \
+                          -s "${WORKSPACE}" \
+                          --scan-types "sast"
+                    '''
+                    // --- Pour activer le break-build (gate de sécurité) ---
+                    // Une fois que tu connais ton baseline de vulnérabilités, ajoute
+                    // ce flag à la commande ci-dessus pour casser le build au-delà du seuil :
+                    //   --threshold "sast-high=1;sast-medium=10"
+                    // (signifie : >=1 High OU >=10 Medium => le build échoue)
+                }
+            }
+        }
+ 
+        // STEP 3 — Build common-lib first (other services depend on it)
         stage('Build common-lib') {
             steps {
                 echo '=== Installing common-lib to local repo ==='
@@ -32,8 +58,8 @@ pipeline {
                 }
             }
         }
-
-        // STEP 3 — Build all microservices in parallel
+ 
+        // STEP 4 — Build all microservices in parallel
         stage('Build Microservices') {
             steps {
                 script {
@@ -58,8 +84,8 @@ pipeline {
                 }
             }
         }
-
-        // STEP 4 — Build Docker images
+ 
+        // STEP 5 — Build Docker images
         stage('Build Docker Images') {
             steps {
                 script {
@@ -80,8 +106,8 @@ pipeline {
                 }
             }
         }
-
-        // STEP 5 — Load images into KIND
+ 
+        // STEP 6 — Load images into KIND
         stage('Load Images into KIND') {
             steps {
                 script {
@@ -100,8 +126,8 @@ pipeline {
                 }
             }
         }
-
-        // STEP 6 — Deploy to KIND
+ 
+        // STEP 7 — Deploy to KIND
         stage('Deploy to Kubernetes') {
             steps {
                 echo '=== Rolling out new images to all deployments ==='
@@ -125,8 +151,8 @@ pipeline {
                 }
             }
         }
-
-        // STEP 7 — Wait for pods to be ready
+ 
+        // STEP 8 — Wait for pods to be ready
         stage('Verify Deployment') {
             steps {
                 echo '=== Waiting for rollouts to complete ==='
@@ -151,9 +177,9 @@ pipeline {
                 }
             }
         }
-
+ 
     }
-
+ 
     post {
         success {
             echo '✅ Pipeline succeeded — Build + Deploy complete'
@@ -167,3 +193,4 @@ pipeline {
         }
     }
 }
+ 
