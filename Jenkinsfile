@@ -128,7 +128,7 @@ pipeline {
                             docker run --rm \
                               -v \$(pwd)/clamav-scan/${svc}:/scandir:ro \
                               clamav/clamav:stable \
-                              clamscan -r --infected --no-summary /scandir
+                              clamscan -r /scandir
                         """
                     }
                 }
