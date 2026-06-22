@@ -107,6 +107,34 @@ pipeline {
             }
         }
  
+// STEP 5.5 — Scan antivirus des images avec ClamAV
+        stage('ClamAV - Image Malware Scan') {
+            steps {
+                script {
+                    def services = [
+                        'api-gateway', 'identity-service', 'order-service',
+                        'payment-service', 'product-service', 'email-service'
+                    ]
+                    services.each { svc ->
+                        echo "=== ClamAV scan: ${svc}:${IMAGE_TAG} ==="
+                        sh """
+                            # 1) Extraire le filesystem de l'image dans un dossier
+                            rm -rf clamav-scan/${svc} && mkdir -p clamav-scan/${svc}
+                            CID=\$(docker create ${svc}:${IMAGE_TAG})
+                            docker export \$CID | tar -x -C clamav-scan/${svc}
+                            docker rm \$CID
+
+                            # 2) Scanner ce filesystem avec l'image officielle ClamAV
+                            docker run --rm \
+                              -v \$(pwd)/clamav-scan/${svc}:/scandir:ro \
+                              clamav/clamav:stable \
+                              clamscan -r --infected --no-summary /scandir
+                        """
+                    }
+                }
+            }
+        }
+
         // STEP 6 — Load images into KIND
         stage('Load Images into KIND') {
             steps {
