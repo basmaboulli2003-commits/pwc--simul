@@ -108,6 +108,7 @@ pipeline {
         }
  
 // STEP 5.5 — Scan antivirus des images avec ClamAV
+       // STEP 5.5 — Scan antivirus des images avec ClamAV
         stage('ClamAV - Image Malware Scan') {
             steps {
                 script {
@@ -118,17 +119,24 @@ pipeline {
                     services.each { svc ->
                         echo "=== ClamAV scan: ${svc}:${IMAGE_TAG} ==="
                         sh """
-                            # 1) Extraire le filesystem de l'image dans un dossier
-                            rm -rf clamav-scan/${svc} && mkdir -p clamav-scan/${svc}
+                            VOL=clamav-${svc}-${IMAGE_TAG}
+                            docker volume create \$VOL
+
+                            # 1) Extraire le filesystem de l'image directement dans le volume
                             CID=\$(docker create ${svc}:${IMAGE_TAG})
-                            docker export \$CID | tar -x -C clamav-scan/${svc}
+                            docker cp \$CID:/ - | docker run --rm -i \
+                              -v \$VOL:/scandir \
+                              busybox sh -c "tar -x -C /scandir"
                             docker rm \$CID
 
-                            # 2) Scanner ce filesystem avec l'image officielle ClamAV
+                            # 2) Scanner le volume avec ClamAV
                             docker run --rm \
-                              -v \$(pwd)/clamav-scan/${svc}:/scandir:ro \
+                              -v \$VOL:/scandir:ro \
                               clamav/clamav:stable \
                               clamscan -r /scandir
+
+                            # 3) Nettoyage du volume
+                            docker volume rm \$VOL || true
                         """
                     }
                 }
